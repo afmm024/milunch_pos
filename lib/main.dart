@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:milunch_pos/pages/lock.dart';
@@ -8,14 +10,6 @@ import 'package:window_manager/window_manager.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
-  await WindowManager.instance.ensureInitialized();
-  windowManager.waitUntilReadyToShow().then((_) async {
-    await WindowManager.instance.setMinimumSize(const Size(1200, 600));
-    await WindowManager.instance.setMaximumSize(const Size(1920, 1080));
-    await windowManager.maximize();
-    await windowManager.show();
-  });
 
   runApp(MultiProvider(
     providers: [ChangeNotifierProvider(create: (_) => GeneralProvider())],
