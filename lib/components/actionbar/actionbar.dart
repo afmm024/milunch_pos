@@ -12,6 +12,9 @@ class ActionBar extends StatelessWidget implements PreferredSizeWidget {
       ),
       centerTitle: false,
       elevation: 0,
+      shape: Border(
+        bottom: BorderSide(color: Colors.grey.shade200, width: 1),
+      ),
       backgroundColor: Colors.white,
       actions: [
         Padding(
