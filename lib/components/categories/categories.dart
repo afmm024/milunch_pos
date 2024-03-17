@@ -16,7 +16,11 @@ class _CategoriesListState extends State<CategoriesList> {
   @override
   void initState() {
     super.initState();
-    if (context.mounted) getCategories();
+    if (context.mounted){
+      if(Provider.of<Categoriesprovider>(context).categories.isEmpty){
+        getCategories();
+      }
+    }
   }
 
   Future<void> getCategories() async {
