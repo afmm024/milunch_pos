@@ -43,13 +43,12 @@ dependencies:
   customizable_counter: ^1.0.4
   responsive_grid: ^2.4.4
   dio: ^5.4.1
-  intl: ^0.19.0
+  intl: ^0.18.0
   flutter_mongodb_realm: ^2.3.0
   mongo_dart: ^0.9.4
   modal_bottom_sheet: ^2.1.2
   group_button: ^5.3.4
   numpad_layout: ^0.0.3
-  pluto_grid: ^8.0.0
 
 dev_dependencies:
   flutter_test:

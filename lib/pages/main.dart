@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:milunch_pos/components/actionbar/actionbar.dart';
 import 'package:milunch_pos/components/navmenu/navmenu.dart';
 import 'package:milunch_pos/pages/factura.dart';
+import 'package:milunch_pos/pages/inventory.dart';
 import 'package:milunch_pos/providers/general.provider.dart';
 import 'package:provider/provider.dart';
 
@@ -17,7 +18,7 @@ class _MainScreen extends State<MainScreen> {
       case 0:
         return FacturaScreen();
       case 1:
-        return Container();
+        return InventoryScreen();
       case 2:
         return Container();
       default:

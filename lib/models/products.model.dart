@@ -7,6 +7,7 @@ class Products {
   Map<dynamic,dynamic> product_type;
   ObjectId? category_id;
   DateTime created;
+  String codebar;
 
   Products(
       {this.id,
@@ -14,13 +15,16 @@ class Products {
       required this.name,
       required this.sku,
       required this.product_type,
-      required this.created});
+      required this.created,
+      required this.codebar
+      });
   Map<dynamic, dynamic> toJson() {
     return {
       "name": name,
       "sku": sku,
       "product_type": product_type,
       "created": created,
+      "codebar": codebar
     };
   }
 
@@ -32,6 +36,7 @@ class Products {
       product_type: json['product_type'],
       category_id: json['category_id'],
       created: json['created'],
+      codebar: json['codebar']
     );
   }
 }
