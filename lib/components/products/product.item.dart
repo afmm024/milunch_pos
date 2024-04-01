@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:milunch_pos/models/cart.model.dart';
-import 'package:milunch_pos/providers/cart.provider.dart';
+import 'package:milunch_pos/providers/order.controller.dart';
 import 'package:milunch_pos/utils/format.dart';
-import 'package:provider/provider.dart';
+
+final OrderController controller = Get.put(OrderController());
 
 class CardItem extends StatelessWidget {
   final String image;
@@ -22,78 +25,62 @@ class CardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(right: 20, bottom: 20),
-      padding: const EdgeInsets.all(12),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(18),
-        color: Colors.white,
-        border: Border.all(color: Colors.grey.shade200, width: 3),
-      ),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Container(
-            height: 130,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(16),
-              image: DecorationImage(
-                image: AssetImage('assets/' + image),
-                fit: BoxFit.cover,
-              ),
-            ),
-          ),
-          const SizedBox(height: 10),
-          Text(
-            title,
-            style: const TextStyle(
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-              fontSize: 14,
-            ),
-          ),
-          const SizedBox(height: 20),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                FormatUtils.formatCurrency(int.parse(price)),
-                style: const TextStyle(
-                  color: Colors.red,
-                  fontSize: 20,
+
+    return InkWell(
+      onTap: () {
+        Cart itemCart = Cart(
+            image: image,
+            name: title,
+            price: int.parse(price),
+            quantity: 1,
+            sku: sku);
+            controller.addItem(itemCart);
+      },
+      child: Container(
+        padding: const EdgeInsets.all(15),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          border: Border.all(color: Colors.grey.shade300, width: 3),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Container(
+              height: 130,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                image: DecorationImage(
+                  image: AssetImage(image),
+                  fit: BoxFit.cover,
                 ),
               ),
-              Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(text: item),
-                    const WidgetSpan(
-                        child:
-                            Icon(Icons.check, size: 18, color: Colors.green)),
-                  ],
-                ),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              title,
+              style: GoogleFonts.ubuntu(),
+            ),
+            const SizedBox(height: 10),
+            Text.rich(
+              TextSpan(
+                children: [
+                  TextSpan(
+                      text: 'Disponibles: $item',
+                      style: GoogleFonts.ubuntu(fontSize: 12)),
+                  const WidgetSpan(
+                      child: Icon(Icons.check, size: 15, color: Colors.green)),
+                ],
               ),
-            ],
-          ),
-          const SizedBox(height: 10),
-          Wrap(
-            direction: Axis.horizontal,
-            spacing: 8.0,
-            children: <Widget>[
-              TextButton(
-                  onPressed: () {
-                    Cart item = Cart(
-                        image: image,
-                        name: title,
-                        price: int.parse(price),
-                        quantity: 1,
-                        sku: sku);
-                    context.read<CartProvider>().putItem(item);
-                  },
-                  child: const Text('Añadir al carrito'))
-            ],
-          ),
-        ],
+            ),
+            const SizedBox(height: 5),
+            Text(
+              FormatUtils.formatCurrency(int.parse(price)),
+              style: GoogleFonts.ubuntu(fontSize: 20, color: Colors.red),
+              textAlign: TextAlign.center,
+            ),
+          ],
+        ),
       ),
     );
   }

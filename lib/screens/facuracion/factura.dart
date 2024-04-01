@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:milunch_pos/components/cart/cart.main.dart';
+import 'package:milunch_pos/components/cart/cart.order.dart';
 import 'package:milunch_pos/components/categories/categories.dart';
 import 'package:milunch_pos/components/products/products.dart';
 
@@ -8,18 +8,16 @@ class FacturaScreen extends StatefulWidget {
   FacturaScreen({Key? key}) : super(key: key);
 
   @override
-  _FacturaScreen createState() => new _FacturaScreen();
+  _FacturaScreen createState() => _FacturaScreen();
 }
 
 class _FacturaScreen extends State<FacturaScreen> {
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Expanded(
             flex: 14,
@@ -34,9 +32,9 @@ class _FacturaScreen extends State<FacturaScreen> {
               ],
             ),
           ),
-          Expanded(
+          const Expanded(
               flex: 5,
-              child: CartMain()),
+              child: CartOrder()),
         ],
       ),
     );

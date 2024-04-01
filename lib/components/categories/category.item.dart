@@ -1,48 +1,47 @@
 import 'package:flutter/material.dart';
 
 class CardHorizontalItem extends StatelessWidget {
-
   final String icon;
   final String title;
   final bool isActive;
+  void Function(String category) handleSelect;
 
-  CardHorizontalItem({
-    required this.icon, 
-    required this.title, 
-    required this.isActive
-  });
+  CardHorizontalItem(
+      {required this.icon, required this.title, required this.isActive, required this.handleSelect});
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     return Container(
-      width: 180,
-      margin: const EdgeInsets.only(right: 26),
-      padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.white,
-        border: isActive
-            ? Border.all(color: Colors.red, width: 3)
-            : Border.all(color: Colors.grey.shade200, width: 3),
-      ),
-      child: Row(
-        children: [
-          Image(
+        width: 250,
+        margin: const EdgeInsets.only(right: 26),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.white,
+          border: isActive
+              ? Border.all(color: Colors.red, width: 3)
+              : Border.all(color: Colors.grey.shade200, width: 3),
+        ),
+        child: InkWell(
+          onTap: () => handleSelect(title),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              /*Image(
             image: AssetImage('assets/' + icon),
             width: 38,
+          ),*/
+              const SizedBox(width: 8),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 14,
+                  color: Colors.black,
+                  fontWeight: FontWeight.bold,
+                ),
+              )
+            ],
           ),
-          const SizedBox(width: 8),
-          Text(
-            title,
-            style: const TextStyle(
-              fontSize: 14,
-              color: Colors.black,
-              fontWeight: FontWeight.bold,
-            ),
-          )
-        ],
-      ),
-    );
+        ));
   }
-  
 }

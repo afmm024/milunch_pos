@@ -48,3 +48,5 @@ class Order {
     );
   }
 }
+
+ enum Payment { nequi, daviplata, efectivo }

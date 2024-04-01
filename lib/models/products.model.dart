@@ -5,7 +5,7 @@ class Products {
   String name;
   String sku;
   Map<dynamic,dynamic> product_type;
-  ObjectId? category_id;
+  String? category_id;
   DateTime created;
   String codebar;
 
