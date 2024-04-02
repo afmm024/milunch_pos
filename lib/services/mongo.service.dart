@@ -7,6 +7,7 @@ class MongoDatabase {
   static final DbCollection categories = _db!.collection(DatabaseEnv.categoriesCollect());
   static final DbCollection products = _db!.collection(DatabaseEnv.productCollect());
   static final DbCollection users = _db!.collection(DatabaseEnv.usersCollect());
+  static final DbCollection orders = _db!.collection(DatabaseEnv.usersCollect());
 
   static Future<Db> getConnection() async {
     int retryAttempts = 5;

@@ -165,15 +165,7 @@ class CartListView extends StatelessWidget {
                                   Radius.circular(10),
                                 ))),
                             onPressed: () {
-                              showDialog(
-                                context: context,
-                                builder: (context) => FluidDialog(
-                                  rootPage: FluidDialogPage(
-                                    alignment: Alignment.center,
-                                    builder: (context) => const OrderDialog(),
-                                  ),
-                                ),
-                              );
+                              
                             },
                             child: const Text(
                               'Generar pago',

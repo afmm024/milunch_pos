@@ -7,6 +7,7 @@ class Order {
   String state;
   List<Cart> products;
   ObjectId? clientsId;
+  String employeId;
   double totalAmount;
   String typePayment;
   String paymentMethod;
@@ -21,11 +22,13 @@ class Order {
       required this.totalAmount,
       required this.typePayment,
       required this.paymentMethod,
+      required this.employeId,
       required this.created});
-  Map<dynamic, dynamic> toJson() {
+  Map<String, dynamic> toJson() {
     return {
       "idOrder": idOrder,
       "state": state,
+      "employeId": employeId,
       "products": products,
       "totalAmount": totalAmount,
       "typePayment": typePayment,
@@ -39,6 +42,7 @@ class Order {
       id: json['_id'],
       idOrder: json['idOrder'],
       state: json['state'],
+      employeId: json['employeId'],
       products: json['products'],
       totalAmount: json['totalAmount'],
       paymentMethod: json['paymentMethod'],

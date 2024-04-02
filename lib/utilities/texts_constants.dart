@@ -24,4 +24,5 @@ class DatabaseEnv {
   static String categoriesCollect() => "categories";
   static String productCollect() => "products_beta";
   static String usersCollect() => "users";
+  static String orderCollect() => "orders";
 }
