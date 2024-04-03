@@ -5,6 +5,7 @@ import 'package:milunch_pos/components/navmenu/navmenu.dart';
 import 'package:milunch_pos/providers/data.controller.dart';
 import 'package:milunch_pos/screens/facuracion/factura.dart';
 import 'package:milunch_pos/providers/general.controller.dart';
+import 'package:milunch_pos/screens/turno/turno.dart';
 
 class MainScreen extends StatefulWidget {
   @override
@@ -20,7 +21,7 @@ class _MainScreen extends State<MainScreen> {
       case 0:
         return FacturaScreen();
       case 1:
-        return Container();
+        return TurnoScreen();
       default:
         return FacturaScreen();
     }
@@ -36,10 +37,11 @@ class _MainScreen extends State<MainScreen> {
           tooltip: 'Sincronizar datos',
           onPressed: () => controllerData.handleAll(),
           child: const Icon(Icons.refresh, color: Colors.white, size: 28),
-          ),
+        ),
         body: GetX<General>(
             builder: (_) => Row(children: <Widget>[
                   NavigationRail(
+                      groupAlignment: 0.0,
                       destinations: <NavigationRailDestination>[
                         ...NavigationMenu().getMainMenu(context)
                       ],

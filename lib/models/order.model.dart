@@ -5,9 +5,10 @@ class Order {
   ObjectId? id;
   String idOrder;
   String state;
-  List<Cart> products;
+  String products;
   ObjectId? clientsId;
   String employeId;
+  String turnId;
   double totalAmount;
   String typePayment;
   String paymentMethod;
@@ -23,12 +24,14 @@ class Order {
       required this.typePayment,
       required this.paymentMethod,
       required this.employeId,
+      required this.turnId,
       required this.created});
   Map<String, dynamic> toJson() {
     return {
-      "idOrder": idOrder,
+      "numOrder": idOrder,
       "state": state,
       "employeId": employeId,
+      "turnId": turnId,
       "products": products,
       "totalAmount": totalAmount,
       "typePayment": typePayment,
@@ -40,9 +43,10 @@ class Order {
   factory Order.fromJson(Map<dynamic, dynamic> json) {
     return Order(
       id: json['_id'],
-      idOrder: json['idOrder'],
+      idOrder: json['numOrder'],
       state: json['state'],
       employeId: json['employeId'],
+      turnId: json['turnId'],
       products: json['products'],
       totalAmount: json['totalAmount'],
       paymentMethod: json['paymentMethod'],
@@ -52,5 +56,3 @@ class Order {
     );
   }
 }
-
- enum Payment { nequi, daviplata, efectivo }

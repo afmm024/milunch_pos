@@ -7,7 +7,7 @@ class CardHorizontalItem extends StatelessWidget {
   void Function(String category) handleSelect;
 
   CardHorizontalItem(
-      {required this.icon, required this.title, required this.isActive, required this.handleSelect});
+      {super.key, required this.icon, required this.title, required this.isActive, required this.handleSelect});
 
   @override
   Widget build(BuildContext context) {

@@ -54,6 +54,7 @@ dependencies:
   connectivity_plus: ^6.0.1
   fluid_dialog: ^2.0.0
   flutter_side_menu: ^0.4.0
+  select_card: ^0.0.9
 
 dev_dependencies:
   flutter_test:
