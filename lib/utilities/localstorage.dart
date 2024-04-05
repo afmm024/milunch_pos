@@ -1,4 +1,3 @@
-
 import 'dart:convert';
 import 'package:milunch_pos/models/user.model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -18,5 +17,10 @@ class LocalStorage {
     if (jsonString == null) return null;
     final jsonMap = json.decode(jsonString);
     return User.fromJson(jsonMap);
+  }
+
+  Future<void> removeAuthModel() async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
   }
 }

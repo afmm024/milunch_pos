@@ -55,6 +55,7 @@ dependencies:
   fluid_dialog: ^2.0.0
   flutter_side_menu: ^0.4.0
   select_card: ^0.0.9
+  coupon_uikit: ^0.2.1
 
 dev_dependencies:
   flutter_test:
@@ -66,13 +67,6 @@ dev_dependencies:
   # package. See that file for information about deactivating specific lint
   # rules and activating additional ones.
   flutter_lints: ^2.0.0
-  msix: ^3.16.7
-
-msix_config: 
-  display_name: Mi Lunch POS
-  msix_version: 1.0.0.0
-  publisher_display_name: Inversiones SOGEIN SAS
-  identity_name: com.milunch.pos
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

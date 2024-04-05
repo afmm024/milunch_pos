@@ -7,14 +7,9 @@ import 'package:milunch_pos/utilities/texts_constants.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SecurityViewModel {
-  static Future<bool> checkLogin() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    return prefs.getBool(Texts.turneActive()) ?? false;
-  }
-
   Future<void> handleLogin(BuildContext context, int pin) async {
     final userResponse = await UserService().login(pin);
-     if (!context.mounted) return;
+    if (!context.mounted) return;
     if (!userResponse.status) {
       // ignore: use_build_context_synchronously
       CustomSnackBar(

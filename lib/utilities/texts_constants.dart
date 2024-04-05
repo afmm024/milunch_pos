@@ -22,12 +22,7 @@ class Texts {
     'Daviplata',
     'Mixto'
   ];
-  static List<String> ids = <String>[
-    'efectivo',
-    'nequi',
-    'daviplata',
-    'mixto'
-  ];
+  static List<String> ids = <String>['efectivo', 'nequi', 'daviplata', 'mixto'];
   static List<String> imagesFromNetwork = <String>[
     "https://cdn-icons-png.freepik.com/512/3898/3898031.png",
     "https://seeklogo.com/images/N/nequi-logo-58FBE82BA6-seeklogo.com.png",
@@ -44,4 +39,5 @@ class DatabaseEnv {
   static String usersCollect() => "users";
   static String orderCollect() => "orders";
   static String paramsCollect() => "params";
+  static String turnCollect() => "turns";
 }

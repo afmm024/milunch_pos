@@ -22,9 +22,9 @@ class OrderService {
     return await MongoDatabase.params.findOne({'type': 'order_queue'});
   }
 
-  Future<List<Order>> getOrders() async {
+  Future<List<Order>> getOrders(String turnID) async {
     return await MongoDatabase.orders
-        .find()
+        .find({'turnId': turnID})
         .map((json) => Order.fromJson(json))
         .toList();
   }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:milunch_pos/providers/auth.controller.dart';
 import 'package:milunch_pos/providers/cart.provider.dart';
 import 'package:milunch_pos/providers/numpad.provider.dart';
 import 'package:milunch_pos/screens/auth/login.screen.dart';
@@ -23,6 +24,8 @@ void main() async {
   ));
 }
 
+final AuthenticationController controller = Get.put(AuthenticationController());
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -31,8 +34,9 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       themeMode: ThemeMode.light,
       theme: ThemeData(
-          scaffoldBackgroundColor:
-              const Color(0xFFEFEFEF)), // set static light mode
+        primarySwatch: Colors.red,
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+      ),
       debugShowCheckedModeBanner: false, // hide debug mode
       //'title:' On iOS this value cannot be used.
       // to use this titile in iOS so change in
@@ -41,22 +45,19 @@ class MyApp extends StatelessWidget {
       // 'Future' is function to set base root
       home: Scaffold(
         backgroundColor: Colors.white,
-        body: FutureBuilder<bool>(
-          future: SecurityViewModel.checkLogin(),
-          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
-            if (snapshot.hasData) {
-              if (snapshot.data!) {
-                return MainScreen();
-              }
-              return const LoginScreen();
-            } else if (snapshot.hasError) {
-              return const LoginScreen();
-            }
-            return const Center(
-              child: CircularProgressIndicator(),
-            );
-          },
-        ),
+        body: Obx(() {
+          if (controller.state == "Unauthenticated") {
+            return LoginScreen();
+          }
+
+          if (controller.state == "Authenticated") {
+            return MainScreen();
+          }
+
+          return const Center(
+            child: CircularProgressIndicator(),
+          );
+        }),
       ),
     );
   }

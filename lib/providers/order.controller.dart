@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -8,13 +9,13 @@ import 'package:milunch_pos/services/order.service.dart';
 import 'package:milunch_pos/utilities/localstorage.dart';
 
 class OrderController extends GetxController {
-
   final cartProducts = <Cart>[].obs;
   final itemCount = 0.obs;
   final price = 0.0.obs;
   final _paymentMehod = "".obs;
   final _inputMoney = "0".obs;
   final _orderId = "".obs;
+  final orders = <Order>[].obs;
   final OrderService orderService = OrderService();
   final LocalStorage storage = LocalStorage();
 
@@ -23,14 +24,31 @@ class OrderController extends GetxController {
   String get inputMoney => _inputMoney.value;
   String get orderId => _orderId.value;
 
-  handleOrderId() async{
+  handleOrderId() async {
     final paramData = await orderService.getOrderQueue();
-     _orderId.value = 'ML-POS-${paramData!['value']}';
+    _orderId.value = 'ML-POS-${paramData!['value']}';
   }
 
-  handleOrders() async {
-    final orders = await orderService.getOrders();
-    return orders.length;
+  handleOrders(String turnID) async {
+    orders.value = await orderService.getOrders(turnID);
+  }
+
+  double handleEfectivoOrders() {
+    final ordersEfectivo =
+        orders.where((i) => i.typePayment == "Efectivo").toList();
+    return ordersEfectivo.fold<double>(
+        0, (sum, item) => sum + item.totalAmount);
+  }
+
+  double handleEfectivoTransferencias() {
+    final ordersEfectivo =
+        orders.where((i) => i.typePayment == "Tranferencia").toList();
+    return ordersEfectivo.fold<double>(
+        0, (sum, item) => sum + item.totalAmount);
+  }
+
+  Future<void> logoutTurn() async {
+    await storage.removeAuthModel();
   }
 
   createOrder() async {
@@ -44,49 +62,51 @@ class OrderController extends GetxController {
       state: 'Active',
       totalAmount: priceTotal,
       turnId: 'idtruntest',
-      typePayment: paymentMethod == "Nequi" || paymentMethod == "Daviplata" ? "Transferencia" : "Efectivo",
+      typePayment: paymentMethod == "Nequi" || paymentMethod == "Daviplata"
+          ? "Transferencia"
+          : "Efectivo",
     );
     await orderService.createOrder(orderData);
     resetOrder();
   }
 
-  resetOrder(){
+  resetOrder() {
     cartProducts.clear();
     itemCount.value = 0;
     price.value = 0.0;
     _paymentMehod.value = "";
     _inputMoney.value = "0";
-    _orderId.value =  "";
+    _orderId.value = "";
   }
 
-  changePaymentMethod(String id){
+  changePaymentMethod(String id) {
     _paymentMehod.value = id;
   }
 
-  handleInputMoney(String input){
-    if(input == ""){
+  handleInputMoney(String input) {
+    if (input == "") {
       _inputMoney.value = "0";
-    }else{
-       _inputMoney.value = input;
+    } else {
+      _inputMoney.value = input;
     }
   }
 
   addItem(Cart itemCart) {
     debugPrint("Agregaron un item");
     var contain = cartProducts.where((item) => item.sku == itemCart.sku);
-    if(contain.isEmpty){
-       cartProducts.add(itemCart);
+    if (contain.isEmpty) {
+      cartProducts.add(itemCart);
       cartProducts.refresh();
       countAllItems();
       calculatePrice();
     }
   }
 
-  removeItem(int index){
-     cartProducts.removeAt(index);
-     cartProducts.refresh();
-      countAllItems();
-      calculatePrice();
+  removeItem(int index) {
+    cartProducts.removeAt(index);
+    cartProducts.refresh();
+    countAllItems();
+    calculatePrice();
   }
 
   countAllItems() {
@@ -115,7 +135,7 @@ class OrderController extends GetxController {
   void decrease(int index) {
     if (cartProducts[index].quantity > 0) {
       cartProducts[index].quantity--;
-      if(cartProducts[index].quantity == 0){
+      if (cartProducts[index].quantity == 0) {
         cartProducts.removeAt(index);
       }
       cartProducts.refresh();
@@ -132,8 +152,4 @@ class OrderController extends GetxController {
     itemCount.value = 0;
     calculatePrice();
   }
-
-
-
-  
 }
