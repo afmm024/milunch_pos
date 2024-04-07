@@ -5,7 +5,7 @@ class Order {
   ObjectId? id;
   String idOrder;
   String state;
-  String products;
+  List<dynamic> products;
   ObjectId? clientsId;
   String employeId;
   String turnId;

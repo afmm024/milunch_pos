@@ -25,7 +25,6 @@ class CardItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     return InkWell(
       onTap: () {
         Cart itemCart = Cart(
@@ -34,7 +33,7 @@ class CardItem extends StatelessWidget {
             price: int.parse(price),
             quantity: 1,
             sku: sku);
-            controller.addItem(itemCart);
+        controller.addItem(itemCart);
       },
       child: Container(
         padding: const EdgeInsets.all(15),
@@ -47,7 +46,7 @@ class CardItem extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             Container(
-              height: 130,
+              height: 80,
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5),
                 image: DecorationImage(
@@ -60,20 +59,9 @@ class CardItem extends StatelessWidget {
             Text(
               title,
               style: GoogleFonts.ubuntu(),
+              textAlign: TextAlign.center,
             ),
             const SizedBox(height: 10),
-            Text.rich(
-              TextSpan(
-                children: [
-                  TextSpan(
-                      text: 'Disponibles: $item',
-                      style: GoogleFonts.ubuntu(fontSize: 12)),
-                  const WidgetSpan(
-                      child: Icon(Icons.check, size: 15, color: Colors.green)),
-                ],
-              ),
-            ),
-            const SizedBox(height: 5),
             Text(
               FormatUtils.formatCurrency(int.parse(price)),
               style: GoogleFonts.ubuntu(fontSize: 20, color: Colors.red),

@@ -4,12 +4,12 @@ import 'package:fluid_dialog/fluid_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:milunch_pos/components/cart/cart.checkout.dart';
+import 'package:milunch_pos/providers/auth.controller.dart';
 import 'package:milunch_pos/providers/general.controller.dart';
 import 'package:milunch_pos/providers/order.controller.dart';
 import 'package:milunch_pos/screens/auth/login.screen.dart';
-import 'package:milunch_pos/screens/turno/turno.dart';
 import 'package:milunch_pos/utils/format.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ActionBar extends StatelessWidget implements PreferredSizeWidget {
   const ActionBar({super.key});
@@ -17,6 +17,7 @@ class ActionBar extends StatelessWidget implements PreferredSizeWidget {
   Widget build(BuildContext context) {
     final controller = Get.put(General());
     final controllerOrder = Get.put(OrderController());
+    final controllerAuth = Get.put(AuthenticationController());
     return GetX<General>(
         builder: (_) => AppBar(
               title: Text(
@@ -55,9 +56,9 @@ class ActionBar extends StatelessWidget implements PreferredSizeWidget {
                                     color: Colors.white, fontSize: 16),
                               ),
                               onTap: () async => {
-                                await controllerOrder
-                                    .handleOrders("idtruntest"),
+                                await controllerOrder.handleOrders(),
                                 showDialog(
+                                  // ignore: use_build_context_synchronously
                                   context: context,
                                   builder: (context) => FluidDialog(
                                     rootPage: FluidDialogPage(
@@ -102,7 +103,7 @@ class ActionBar extends StatelessWidget implements PreferredSizeWidget {
                                                             MainAxisAlignment
                                                                 .center,
                                                         children: [
-                                                          Text(
+                                                          const Text(
                                                             'ORDENES CREADAS EN TURNO',
                                                             style: TextStyle(
                                                               color: Colors
@@ -113,12 +114,14 @@ class ActionBar extends StatelessWidget implements PreferredSizeWidget {
                                                                       .bold,
                                                             ),
                                                           ),
-                                                          SizedBox(height: 10),
+                                                          const SizedBox(
+                                                              height: 10),
                                                           Text(
                                                             controllerOrder
                                                                 .orders.length
                                                                 .toString(),
-                                                            style: TextStyle(
+                                                            style:
+                                                                const TextStyle(
                                                               color:
                                                                   Colors.white,
                                                               fontSize: 56,
@@ -131,7 +134,8 @@ class ActionBar extends StatelessWidget implements PreferredSizeWidget {
                                                       ),
                                                       secondChild: Padding(
                                                         padding:
-                                                            EdgeInsets.all(5),
+                                                            const EdgeInsets
+                                                                .all(5),
                                                         child: Column(
                                                           mainAxisAlignment:
                                                               MainAxisAlignment
@@ -142,7 +146,7 @@ class ActionBar extends StatelessWidget implements PreferredSizeWidget {
                                                                   MainAxisAlignment
                                                                       .spaceBetween,
                                                               children: [
-                                                                Text(
+                                                                const Text(
                                                                   'BASE DE TURNO',
                                                                   style:
                                                                       TextStyle(
@@ -160,7 +164,7 @@ class ActionBar extends StatelessWidget implements PreferredSizeWidget {
                                                                       .formatCurrency(
                                                                           150000),
                                                                   style:
-                                                                      TextStyle(
+                                                                      const TextStyle(
                                                                     color: Colors
                                                                         .white,
                                                                     fontSize:
@@ -177,7 +181,7 @@ class ActionBar extends StatelessWidget implements PreferredSizeWidget {
                                                                   MainAxisAlignment
                                                                       .spaceBetween,
                                                               children: [
-                                                                Text(
+                                                                const Text(
                                                                   'TOTAL EFECTIVO VENTAS',
                                                                   style:
                                                                       TextStyle(
@@ -196,7 +200,7 @@ class ActionBar extends StatelessWidget implements PreferredSizeWidget {
                                                                           .handleEfectivoOrders()
                                                                           .toInt()),
                                                                   style:
-                                                                      TextStyle(
+                                                                      const TextStyle(
                                                                     color: Colors
                                                                         .white,
                                                                     fontSize:
@@ -213,7 +217,7 @@ class ActionBar extends StatelessWidget implements PreferredSizeWidget {
                                                                   MainAxisAlignment
                                                                       .spaceBetween,
                                                               children: [
-                                                                Text(
+                                                                const Text(
                                                                   'TOTAL TRANSFERENCIA VENTAS',
                                                                   style:
                                                                       TextStyle(
@@ -232,7 +236,7 @@ class ActionBar extends StatelessWidget implements PreferredSizeWidget {
                                                                           .handleEfectivoTransferencias()
                                                                           .toInt()),
                                                                   style:
-                                                                      TextStyle(
+                                                                      const TextStyle(
                                                                     color: Colors
                                                                         .white,
                                                                     fontSize:
@@ -249,7 +253,7 @@ class ActionBar extends StatelessWidget implements PreferredSizeWidget {
                                                                   MainAxisAlignment
                                                                       .spaceBetween,
                                                               children: [
-                                                                Text(
+                                                                const Text(
                                                                   'TOTAL EN VENTAS',
                                                                   style:
                                                                       TextStyle(
@@ -263,15 +267,14 @@ class ActionBar extends StatelessWidget implements PreferredSizeWidget {
                                                                   ),
                                                                 ),
                                                                 Text(
-                                                                  FormatUtils.formatCurrency(150000 +
-                                                                      controllerOrder
+                                                                  FormatUtils.formatCurrency(controllerOrder
                                                                           .handleEfectivoOrders()
                                                                           .toInt() +
                                                                       controllerOrder
                                                                           .handleEfectivoTransferencias()
                                                                           .toInt()),
                                                                   style:
-                                                                      TextStyle(
+                                                                      const TextStyle(
                                                                     color: Colors
                                                                         .white,
                                                                     fontSize:
@@ -283,7 +286,7 @@ class ActionBar extends StatelessWidget implements PreferredSizeWidget {
                                                                 ),
                                                               ],
                                                             ),
-                                                            SizedBox(
+                                                            const SizedBox(
                                                               height: 10,
                                                             ),
                                                             Row(
@@ -291,7 +294,7 @@ class ActionBar extends StatelessWidget implements PreferredSizeWidget {
                                                                   MainAxisAlignment
                                                                       .spaceBetween,
                                                               children: [
-                                                                Text(
+                                                                const Text(
                                                                   'TOTAL EN CAJA',
                                                                   style:
                                                                       TextStyle(
@@ -310,7 +313,7 @@ class ActionBar extends StatelessWidget implements PreferredSizeWidget {
                                                                           .handleEfectivoOrders()
                                                                           .toInt()),
                                                                   style:
-                                                                      TextStyle(
+                                                                      const TextStyle(
                                                                     color: Colors
                                                                         .white,
                                                                     fontSize:
@@ -322,10 +325,8 @@ class ActionBar extends StatelessWidget implements PreferredSizeWidget {
                                                                 ),
                                                               ],
                                                             ),
-                                                            Spacer(),
+                                                            const Spacer(),
                                                             OutlinedButton(
-                                                              child: Text(
-                                                                  "CERRAR TURNO"),
                                                               style:
                                                                   OutlinedButton
                                                                       .styleFrom(
@@ -333,7 +334,7 @@ class ActionBar extends StatelessWidget implements PreferredSizeWidget {
                                                                     Colors
                                                                         .white,
                                                                 side:
-                                                                    BorderSide(
+                                                                    const BorderSide(
                                                                   color: Colors
                                                                       .white,
                                                                 ),
@@ -342,7 +343,12 @@ class ActionBar extends StatelessWidget implements PreferredSizeWidget {
                                                                   () async {
                                                                 await controllerOrder
                                                                     .logoutTurn();
+                                                                controllerAuth
+                                                                    .signOut();
+                                                                Get.back();
                                                               },
+                                                              child: const Text(
+                                                                  "CERRAR TURNO"),
                                                             ),
                                                           ],
                                                         ),
@@ -371,7 +377,7 @@ class ActionBar extends StatelessWidget implements PreferredSizeWidget {
       decoration: BoxDecoration(
         color: color,
         shape: BoxShape.rectangle,
-        borderRadius: BorderRadius.all(Radius.circular(5.0)),
+        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
       ),
       child: action,
     );

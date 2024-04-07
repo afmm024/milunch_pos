@@ -8,6 +8,7 @@ import 'package:milunch_pos/utilities/texts_constants.dart';
 import 'package:milunch_pos/utils/alerts.dart';
 import 'package:milunch_pos/utils/format.dart';
 import 'package:select_card/select_card.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 final OrderController controller = Get.put(OrderController());
 
@@ -166,43 +167,49 @@ class _ModalCheckoutState extends State<ModalCheckout> {
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Obx(() => Text(
-              "Orden # ${controller.orderId}",
-              style:
-                  GoogleFonts.ubuntu(fontSize: 20, fontWeight: FontWeight.bold),
-            ),),
+            Obx(
+              () => Text(
+                "Orden # ${controller.orderId}",
+                style: GoogleFonts.ubuntu(
+                    fontSize: 20, fontWeight: FontWeight.bold),
+              ),
+            ),
             SizedBox(
-              width: 150,
-              child: FilledButton(
-                
-                            style: ElevatedButton.styleFrom(
-                                minimumSize: const Size.fromHeight(50),
-                                backgroundColor: Colors.red,
-                                shape: const RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.all(
-                                  Radius.circular(10),
-                                ))),
-                            onPressed: () {
-                                if(controller.paymentMethod.isNotEmpty){
-                                  if(controller.paymentMethod == "Efectivo" || controller.paymentMethod == "Mixto"){
-                                    if(controller.inputMoney.isNotEmpty){
-                                        controller.createOrder();
-                                        AlertsUtils.showSnackBar(context, 'Se ha creado la orden correctamente');
-                                        DialogNavigator.of(context).close();
-                                    }
-                                  }else{
-                                    controller.createOrder();
-                                    AlertsUtils.showSnackBar(context, 'Se ha creado la orden correctamente');
-                                    DialogNavigator.of(context).close();
-                                  }
-                                }
-                            },
-                            child: Text(
-                              'Crear orden',
-                              style: GoogleFonts.ubuntu(),
-                            ),
-                          )
-            )
+                width: 150,
+                child: FilledButton(
+                  style: ElevatedButton.styleFrom(
+                      minimumSize: const Size.fromHeight(50),
+                      backgroundColor: Colors.red,
+                      shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ))),
+                  onPressed: () async {
+                    SharedPreferences prefs =
+                        await SharedPreferences.getInstance();
+                    final turnId = prefs.getString("turnId");
+                    if (controller.paymentMethod.isNotEmpty) {
+                      if (controller.paymentMethod == "Efectivo" ||
+                          controller.paymentMethod == "Mixto") {
+                        if (controller.inputMoney.isNotEmpty) {
+                          controller.createOrder(turnId!);
+                          AlertsUtils.showSnackBar(
+                              context, 'Se ha creado la orden correctamente');
+                          DialogNavigator.of(context).close();
+                        }
+                      } else {
+                        controller.createOrder(turnId!);
+                        AlertsUtils.showSnackBar(
+                            context, 'Se ha creado la orden correctamente');
+                        DialogNavigator.of(context).close();
+                      }
+                    }
+                  },
+                  child: Text(
+                    'Crear orden',
+                    style: GoogleFonts.ubuntu(),
+                  ),
+                ))
           ],
         ),
       ]),

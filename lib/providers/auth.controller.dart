@@ -13,7 +13,7 @@ class AuthenticationController extends GetxController {
     super.onInit();
   }
 
-  void signIn() {
+  Future<void> signIn() async {
     _authenticationStateStream.value = "Authenticated";
   }
 

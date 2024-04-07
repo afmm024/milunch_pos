@@ -7,14 +7,18 @@ class CardHorizontalItem extends StatelessWidget {
   void Function(String category) handleSelect;
 
   CardHorizontalItem(
-      {super.key, required this.icon, required this.title, required this.isActive, required this.handleSelect});
+      {super.key,
+      required this.icon,
+      required this.title,
+      required this.isActive,
+      required this.handleSelect});
 
   @override
   Widget build(BuildContext context) {
     return Container(
-        width: 250,
+        width: 200,
         margin: const EdgeInsets.only(right: 26),
-        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 24),
+        padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 14),
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10),
           color: Colors.white,

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:milunch_pos/providers/auth.controller.dart';
 import 'package:milunch_pos/screens/dashboard/main.dart';
 import 'package:milunch_pos/services/users.service.dart';
 import 'package:milunch_pos/utilities/dialogs.dart';
@@ -9,6 +10,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class SecurityViewModel {
   Future<void> handleLogin(BuildContext context, int pin) async {
     final userResponse = await UserService().login(pin);
+    final AuthenticationController authController =
+        Get.find<AuthenticationController>();
     if (!context.mounted) return;
     if (!userResponse.status) {
       // ignore: use_build_context_synchronously
@@ -19,8 +22,8 @@ class SecurityViewModel {
     } else {
       SharedPreferences prefs = await SharedPreferences.getInstance();
       await prefs.setBool(Texts.turneActive(), true);
-      // Action Navigator
-      Get.offAll(MainScreen());
+      await prefs.setString("turnId", userResponse.data);
+      authController.signIn();
     }
   }
 }

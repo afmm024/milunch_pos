@@ -5,8 +5,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:milunch_pos/models/cart.model.dart';
 import 'package:milunch_pos/models/order.model.dart';
+import 'package:milunch_pos/providers/auth.controller.dart';
 import 'package:milunch_pos/services/order.service.dart';
+import 'package:milunch_pos/services/users.service.dart';
 import 'package:milunch_pos/utilities/localstorage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OrderController extends GetxController {
   final cartProducts = <Cart>[].obs;
@@ -29,8 +32,9 @@ class OrderController extends GetxController {
     _orderId.value = 'ML-POS-${paramData!['value']}';
   }
 
-  handleOrders(String turnID) async {
-    orders.value = await orderService.getOrders(turnID);
+  handleOrders() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    orders.value = await orderService.getOrders(prefs.getString('turnId')!);
   }
 
   double handleEfectivoOrders() {
@@ -42,26 +46,29 @@ class OrderController extends GetxController {
 
   double handleEfectivoTransferencias() {
     final ordersEfectivo =
-        orders.where((i) => i.typePayment == "Tranferencia").toList();
+        orders.where((i) => i.typePayment == "Transferencia").toList();
     return ordersEfectivo.fold<double>(
         0, (sum, item) => sum + item.totalAmount);
   }
 
   Future<void> logoutTurn() async {
+    await UserService().logout();
     await storage.removeAuthModel();
+    Get.back();
   }
 
-  createOrder() async {
+  createOrder(String idTurn) async {
     final userAuth = await storage.loadAuthModel();
+
     Order orderData = Order(
       created: DateTime.now(),
-      employeId: userAuth!.id.toString(),
+      employeId: userAuth!.username,
       idOrder: orderId,
       paymentMethod: paymentMethod,
-      products: jsonEncode(cartProducts.map((e) => e.toJson()).toList()),
+      products: cartProducts.map((e) => e.toJson()).toList(),
       state: 'Active',
       totalAmount: priceTotal,
-      turnId: 'idtruntest',
+      turnId: idTurn,
       typePayment: paymentMethod == "Nequi" || paymentMethod == "Daviplata"
           ? "Transferencia"
           : "Efectivo",

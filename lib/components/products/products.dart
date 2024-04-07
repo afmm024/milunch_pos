@@ -24,7 +24,8 @@ class _ProductsListState extends State<ProductsList> {
     return GetX<Data>(
         builder: (_) => BarcodeKeyboardListener(
             child: ResponsiveGridList(
-                desiredItemWidth: 220,
+                desiredItemWidth: 180,
+                squareCells: true,
                 minSpacing: 10,
                 children: controller.productsList.map((product) {
                   return CardItem(
@@ -48,7 +49,8 @@ class _ProductsListState extends State<ProductsList> {
                 Cart itemCart = Cart(
                     image: 'assets/logo/128.png',
                     name: product.name,
-                    price: int.parse(product.product_type['price_sell'].toString()),
+                    price: int.parse(
+                        product.product_type['price_sell'].toString()),
                     quantity: 1,
                     sku: product.sku);
                 controllerOrder.addItem(itemCart);

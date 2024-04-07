@@ -13,8 +13,7 @@ class MongoDatabase {
       _db!.collection(DatabaseEnv.orderCollect());
   static final DbCollection params =
       _db!.collection(DatabaseEnv.paramsCollect());
-  static final DbCollection turns =
-      _db!.collection(DatabaseEnv.paramsCollect());
+  static final DbCollection turns = _db!.collection(DatabaseEnv.turnCollect());
 
   static Future<Db> getConnection() async {
     int retryAttempts = 5;
