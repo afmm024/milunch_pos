@@ -29,7 +29,7 @@ class _MainScreen extends State<MainScreen> {
           Expanded(
             child: Container(
               padding: const EdgeInsets.only(top: 12, right: 12, left: 12),
-              child: FacturaScreen(),
+              child: SizedBox(),
             ),
           ),
         ]));
